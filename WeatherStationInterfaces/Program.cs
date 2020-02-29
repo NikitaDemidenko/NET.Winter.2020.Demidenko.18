@@ -1,23 +1,23 @@
 ﻿using System;
 
-namespace WeatherStationEvents
+namespace WeatherStationInterfaces
 {
     public static class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
             var weatherStation = new WeatherStation();
             var conditionReporter = new CurrentConditionsReport();
             var statisticReporter = new StatisticReport();
 
-            weatherStation.WeatherChanged += conditionReporter.Report;
-            weatherStation.WeatherChanged += statisticReporter.Report;
+            weatherStation.AddObserver(conditionReporter);
+            weatherStation.AddObserver(statisticReporter);
 
             weatherStation.EmulateWeatherChange();
             weatherStation.EmulateWeatherChange();
             weatherStation.EmulateWeatherChange();
 
-            weatherStation.WeatherChanged -= statisticReporter.Report;
+            weatherStation.RemoveObserver(statisticReporter);
 
             weatherStation.EmulateWeatherChange();
             weatherStation.EmulateWeatherChange();
